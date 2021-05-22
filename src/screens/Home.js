@@ -1,10 +1,16 @@
 import React from 'react'
-import {View, Text} from 'react-native'
+import {View, Text, Button} from 'react-native'
+import { withTheme } from 'react-native-paper'
 
-export default function Home({route}){
+function Home({navigation, theme}){
+    const { colors } = theme
     return(
-        <View>
-            <Text>Bem vindo ao LocaCar!!</Text>
+        <View style={{backgroundColor: colors.surface}}>
+            <Text style={{color: colors.text}}>Bem vindo ao LocaCar!!</Text>
+            <Button title="Sobre o app" 
+            color={colors.accent}
+            onPress={() => navigation.navigate('Sobre')}/>
         </View>
     )
 }
+export default withTheme(Home)

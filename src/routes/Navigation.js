@@ -11,7 +11,15 @@ export default function Navigation(){
     return(
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Home">
-                <Stack.Screen name="Home" component={Home}/>
+                <Stack.Screen name="Home" component={Home}
+                    options={
+                        {
+                        title: 'LocaCar',
+                        headerStyle: {backgroundColor: '#2F4F4F'},
+                        headerTintColor: '#FFF'
+                        }
+                    }
+                />
                 <Stack.Screen name="Sobre" component={Sobre}/>
             </Stack.Navigator>
         </NavigationContainer>
