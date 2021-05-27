@@ -1,7 +1,7 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Image, Alert } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
-import { BACKEND } from '../constants'
+
 
 import { List, withTheme, Avatar } from 'react-native-paper'
 
@@ -20,6 +20,17 @@ function ListaCategoria({ data, navigation, theme }) {
         )
     }
 
+    async function confirmaExclusaoRegistro(){
+        try{
+            Alert.alert('Atenção!!', 'Deseja mesmo excluir essa catregoria?', [
+                {text: 'Não', style: 'cancel'},
+                {text: 'Sim', style: 'cancel'} //Exclusão implementada
+            ])
+        }catch (response){
+            Alert.alert(response.data.error)
+        }
+    }
+
     return (
         <>
         <Swipeable renderRightActions={botaoLadoDireito}>
@@ -30,7 +41,7 @@ function ListaCategoria({ data, navigation, theme }) {
                                 <List.Item 
                                     title={data.nome}
                                     description={`status: ${data.status}`}
-                                    leftAvatar={{source: {uri: `${BACKEND}/${data.foto.path}`}}}
+                                    
                                     left={props => <List.Icon {...props} icon="image" />}
                                 />
                     
@@ -60,9 +71,7 @@ const styles = StyleSheet.create({
         height: 100,
         width: 100,
         alignItems: 'center',
-        justifyContent: 'centre',
-        marginRigth: 8,
-        bordertopEndRadius: 20,
+        justifyContent: 'center',
         borderBottomEndRadius: 20
     }
 })

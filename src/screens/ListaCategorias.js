@@ -3,7 +3,7 @@ import { View, ActivityIndicator, Text, StyleSheet, FlatList, RefreshControl } f
 import { withTheme, List, Avatar } from 'react-native-paper'
 import Header from '../components/Header'
 import { BACKEND } from '../constants'
-import ListaCatogoria from './ListaCategoria'
+import ListaCategoria from './ListaCategoria'
 
 function ListaCategorias({ navigation, theme }) {
     const { colors } = theme
@@ -55,9 +55,9 @@ function ListaCategorias({ navigation, theme }) {
                         </View>
 
                     ) : (
-                    <FlatList data={categorias} renderItem={({item}) => {
+                    <FlatList data={categorias} renderItem={({item}) => (
                         <ListaCategoria data={item} navigation={navigation} />
-                    }}
+                    )}
                     keyExtractor={item => item._id.toString()}
                     refreshControl={<RefreshControl 
                                         refreshing={refreshing}
