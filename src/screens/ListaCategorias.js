@@ -23,8 +23,7 @@ function ListaCategorias({ navigation, theme }) {
             .then(data => {
                 setCategorias(data)
                 //console.log('Categorias obtidas com sucesso!!')
-            })
-            .catch(function (error) {
+            }).catch(function (error) {
                 console.error(`Houve um problema ao tentar obter as categorias: ${error.message}`)
             })
         setCarregandoCategorias(false)
