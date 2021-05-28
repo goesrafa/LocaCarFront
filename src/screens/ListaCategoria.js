@@ -1,54 +1,103 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Image, Alert, ActivityIndicator } from 'react-native'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
+import { BACKEND, SIZES } from '../constants'
+
 
 
 import { List, withTheme, Avatar } from 'react-native-paper'
 
 function ListaCategoria({ data, navigation, theme }) {
     const { colors } = theme
+    const [excluindo, setExcluindo] = useState(false)
 
-    function botaoLadoDireito(){
-        return(
+    //Renderização da imagem
+    const renderizaImagem = (uri) => {
+        return (
+            <Image
+                style={{ width: 50, height: 50, marginTop: -64, marginLeft: 8, marginBottom: 10 }}
+                source={{ uri }}
+            />
+        )
+    }
+
+    function botaoLadoDireito() {
+        return (
             <View>
                 <TouchableOpacity style={styles.botaoApagar}
-                onPress={confirmaExclusaoRegistro}>
-                    <Avatar.Icon size={24} icon="delete" style={{backgroundColor: colors.background}}/>
-                    <Text style={{color: colors.text}}>Excluir</Text>
+                    onPress={confirmaExclusaoRegistro}>
+                        {excluindo
+                            ? <ActivityIndicator size="small" color={colors.primary} />
+                            : <Avatar.Icon size={24} icon="delete" style={{ backgroundColor: colors.background }} />
+                        }
+                    <Text style={{ color: colors.text }}>Excluir</Text>
                 </TouchableOpacity>
             </View>
         )
     }
 
-    async function confirmaExclusaoRegistro(){
-        try{
-            Alert.alert('Atenção!!', 'Deseja mesmo excluir essa catregoria?', [
-                {text: 'Não', style: 'cancel'},
-                {text: 'Sim', style: 'cancel'} //Exclusão implementada
+    async function confirmaExclusaoRegistro() {
+       setExcluindo(true)
+       try{
+            Alert.alert('Atenção!', 'Deseja mesmo excluir?', [
+                { text: 'Não', style: 'cancel' },
+                {
+                    text: 'Sim',
+                    onPress: async () => {
+                        await excluirCategoria(data)
+                    },
+                }
             ])
-        }catch (response){
-            Alert.alert(response.data.error)
-        }
+       }catch(response){
+           Alert.alert(response.data.error)
+       }
+       setExcluindo(false)
+    }
+
+    async function excluirCategoria(data) {
+        let url = `${BACKEND}/categoria/${data._id}`
+        await fetch(url, {
+            method: 'DELETE',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json())
+            .then(data => {
+                Alert.alert('Aviso', data.message)
+                navigation.goBack()
+            })
+            .catch(function (error) {
+                console.error('Houve um problema ao excluir a categoria: ' + error.message);
+            })
+    }
+
+    const alterarCategoria = async (data) => {
+        navigation.navigate('AdicionarCategoria', {
+            data: data
+        })
     }
 
     return (
         <>
-        <Swipeable renderRightActions={botaoLadoDireito}>
-            <TouchableOpacity styles={styles.container}
-                              onPress={()=> alterarCategoria(data)}>
-                <View style={{flex: 1, justifyContent: 'center', backgroundColor: colors.background,
-                            borderRadius: 20}}>
-                                <List.Item 
-                                    title={data.nome}
-                                    description={`status: ${data.status}`}
-                                    
-                                    left={props => <List.Icon {...props} icon="image" />}
-                                />
-                    
-                </View>
+            <Swipeable renderRightActions={botaoLadoDireito}>
+                <TouchableOpacity styles={styles.container}
+                    onPress={() => alterarCategoria(data)}>
+                    <View style={{
+                        flex: 1, justifyContent: 'center', backgroundColor: colors.background,
+                        borderRadius: 20
+                    }}>
+                        <List.Item
+                            title={data.nome}
+                            description={`status: ${data.status}`}
+                            leftAvatar={{ source: { uri: `${BACKEND}/${data.foto.path}` } }}
+                            left={props => <List.Icon {...props} icon="image" />}
+                        />
+                        {renderizaImagem(`${BACKEND}/${data.foto.path}`)}
+                    </View>
 
-            </TouchableOpacity>
-        </Swipeable>
+                </TouchableOpacity>
+            </Swipeable>
 
 
         </>
@@ -56,7 +105,7 @@ function ListaCategoria({ data, navigation, theme }) {
 }
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         flex: 1,
         paddingHorizontal: 10,
         paddingVertical: 5,
@@ -66,13 +115,15 @@ const styles = StyleSheet.create({
         marginBottom: 2,
         marginHorizontal: 8
     },
-    botaoApagar:{
-        backgroundColor: '#2F4F4F',
+    botaoApagar: {
+        backgroundColor: '#A52A2A',
         height: 100,
         width: 100,
         alignItems: 'center',
         justifyContent: 'center',
-        borderBottomEndRadius: 20
+        marginRight: 8,
+        borderTopEndRadius: SIZES.borderRadius,
+        borderBottomEndRadius: SIZES.borderRadius
     }
 })
 

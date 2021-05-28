@@ -4,7 +4,7 @@ import { Avatar, Caption, TextInput, FAB, Button, HelperText, Checkbox, Progress
 import Header from '../components/Header'
 import { BACKEND } from '../constants'
 
-
+import * as DocumentPicker from 'expo-document-picker'
 
 function AdicionarCategoria({ navigation, route, theme }) {
     const { colors } = theme
@@ -12,6 +12,8 @@ function AdicionarCategoria({ navigation, route, theme }) {
     const { data } = route.params
     const [nome, setNome] = useState(data.nome)
     const [status, setStatus] = useState(data.status)
+    const fotoVazia = { originalname: '', path: '', size: 0, mimetype: '' }
+    const [foto, setFoto] = useState(data.foto)
     const [salvandoCategoria, setSalvandoCategoria] = useState(false)
     const [erros, setErros] = useState({})
     const [upload, setUpload] = useState(false)
@@ -58,6 +60,43 @@ function AdicionarCategoria({ navigation, route, theme }) {
         if (!nome || nome === '') novosErros.nome = 'O nome não pode ser vazio!'
         else if (nome.length > 40) novosErros.nome = 'O nome informado é muito longo'
         else if (nome.length < 3) novosErros.nome = 'O nome informado é muito curto'
+        //Validando o icone
+        if (foto.mimetype !== 'image/png') novosErros.foto = 'O icone é obrigatório e deve ser em formato PNG'
+        return novosErros
+    }
+
+    const obterImagem = async () => {
+        const apiUrl = `${BACKEND}/upload`;
+        const response = await DocumentPicker.getDocumentAsync({ type: "image/*" })
+        if (response.type === 'success') {
+            setUpload(true)
+            response.type = 'image/png'
+            const data = new FormData();
+            data.append('file', response);
+            await fetch(apiUrl, {
+                method: 'POST',
+                body: data
+            }).then(response => response.json())
+                .then(data => {
+                    if (data.upload === true) {
+                        const { originalname, path, size, mimetype } = data.file[0]
+                        setFoto({
+                            originalname: originalname,
+                            path: path,
+                            size: size,
+                            mimetype: mimetype
+                        })
+                    }
+                })
+                .catch(function (error) {
+                    console.error('Houve um problema ao fazer o upload: ' + error.message);
+                })
+            setUpload(false)
+        } else {
+            Alert.alert(
+                "Atenção!!",
+                "Nenhuma imagem selecionada.")
+        }
     }
 
     return (
@@ -89,6 +128,29 @@ function AdicionarCategoria({ navigation, route, theme }) {
                     <Text style={{ color: colors.text, marginTop: 10 }}>Ativa?</Text>
                 </View>
                 {upload && <ProgressBar indeterminate={true} />}
+                {foto.path.length > 0 ?
+
+                    <Image
+                        style={{ width: 50, height: 50 }}
+                        source={{
+                            uri: `${BACKEND}/${foto.path}`,
+                        }}
+                    />
+                    :
+                    (
+                        <View style={{ flexDirection: 'row' }}>
+                            <Avatar.Icon size={40} icon="folder" />
+                            <Text style={{ color: colors.text, paddingTop: 16 }}>Ainda não foi selecionada nenhuma imagem</Text>
+                        </View>
+                    )
+                }
+
+                <Button icon="camera" mode="contained" onPress={obterImagem} style={{ marginTop: 32, padding: 8 }}>
+                    Selecione uma Imagem
+                </Button>
+                <HelperText type="error" visible={!!erros.foto}>
+                    {erros.foto}
+                </HelperText>
                 <FAB
                     style={styles.fab}
                     icon='content-save'
@@ -125,7 +187,7 @@ const styles = StyleSheet.create({
     checkbox: {
         flexDirection: 'row',
         marginBottom: 32
-    }
+    },
 })
 
 export default withTheme(AdicionarCategoria)

@@ -6,6 +6,7 @@ import { AppContext } from '../themes/ThemeProvider'
 import Configuracoes from '../screens/Configuracoes'
 import Sobre from '../screens/Sobre'
 import ListaCategorias from '../screens/ListaCategorias'
+import AdicionarCategoria from '../screens/AdicionarCategoria'
 import Tabs from './Tabs'
 
 const Stack = createStackNavigator()
@@ -19,6 +20,7 @@ export default function Navigation() {
                     options={{ headerShown: false }}
                 />
                 <Stack.Screen name="ListaCategorias" component={ListaCategorias} options={{ headerShown: false }} />
+                <Stack.Screen name="AdicionarCategoria" component={AdicionarCategoria} options={{ headerShown: false }} />
                 <Stack.Screen name="Sobre" component={Sobre} options={{ headerShown: false }} />
                 <Stack.Screen name="Configuracoes" component={Configuracoes} options={{ headerShown: false }} />
             </Stack.Navigator>
