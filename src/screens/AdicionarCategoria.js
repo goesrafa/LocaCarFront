@@ -44,6 +44,7 @@ function AdicionarCategoria({ navigation, route, theme }) {
                 .then(data => {
                     (data._id || data.message) ? setAviso('Registro salvo com sucesso!!') : setAviso('')
                     setNome('')
+                    setFoto(fotoVazia)
                     //navigation.goBack()
                 })
                 .catch(function (error) {
@@ -58,7 +59,7 @@ function AdicionarCategoria({ navigation, route, theme }) {
         const novosErros = {}
         // Validando nome
         if (!nome || nome === '') novosErros.nome = 'O nome não pode ser vazio!'
-        else if (nome.length > 40) novosErros.nome = 'O nome informado é muito longo'
+        else if (nome.length > 30) novosErros.nome = 'O nome informado é muito longo'
         else if (nome.length < 3) novosErros.nome = 'O nome informado é muito curto'
         //Validando o icone
         if (foto.mimetype !== 'image/png') novosErros.foto = 'O icone é obrigatório e deve ser em formato PNG'

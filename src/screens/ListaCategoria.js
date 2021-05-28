@@ -28,7 +28,8 @@ function ListaCategoria({ data, navigation, theme }) {
                     onPress={confirmaExclusaoRegistro}>
                         {excluindo
                             ? <ActivityIndicator size="small" color={colors.primary} />
-                            : <Avatar.Icon size={24} icon="delete" style={{ backgroundColor: colors.background }} />
+                            : <Avatar.Icon size={24} icon="delete" 
+                                style={{ backgroundColor: colors.background }} />
                         }
                     <Text style={{ color: colors.text }}>Excluir</Text>
                 </TouchableOpacity>
