@@ -48,9 +48,10 @@ function ListaCategorias({ navigation, theme }) {
             }}>
                 <List.Subheader>
                     <Avatar.Icon size={24} icon="refresh" />Atualizar os dados
-                    </List.Subheader>
-                {carregandoCategorias && <ActivityIndicator size="large" color={colors.primary} />}
-                {categorias.length === 0 && !carregandoCategorias ?
+                </List.Subheader>
+                
+                 {carregandoCategorias && <ActivityIndicator size="large" color={colors.primary} />}
+                 {categorias.length === 0 && !carregandoCategorias ?
                     (
                         <View style={styles.tituloAviso}>
                             <Text style={styles.titulo}>Ainda não há nenhuma categoria cadastrada</Text>

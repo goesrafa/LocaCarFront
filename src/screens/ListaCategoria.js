@@ -95,7 +95,6 @@ function ListaCategoria({ data, navigation, theme }) {
                         />
                         {renderizaImagem(`${BACKEND}/${data.foto.path}`)}
                     </View>
-
                 </TouchableOpacity>
             </Swipeable>
 
