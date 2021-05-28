@@ -18,10 +18,11 @@ function ListaCategorias({ navigation, theme }) {
     async function obterCategorias() {
         setCarregandoCategorias(true)
         let url = `${BACKEND}/categorias`
-        await fetch(url).then(response => response.json())
+        await fetch(url)
+            .then(response => response.json())
             .then(data => {
                 setCategorias(data)
-                console.log('Categorias obtidas com sucesso!!')
+                //console.log('Categorias obtidas com sucesso!!')
             })
             .catch(function (error) {
                 console.error(`Houve um problema ao tentar obter as categorias: ${error.message}`)

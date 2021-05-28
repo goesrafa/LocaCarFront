@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Image, Alert, ActivityIndicator } from 'react-native'
+import React, { useState} from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, Image, Alert, ActivityIndicator} from 'react-native'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import { BACKEND, SIZES } from '../constants'
 
