@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "locacar",
+    "name": "LocaCAar",
     "slug": "locacar",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -23,7 +23,8 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/splash.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#008B8B",
+        "package": "com.trabtopicos.locacar"
       }
     },
     "web": {
