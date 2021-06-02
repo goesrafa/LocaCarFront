@@ -56,7 +56,7 @@ function ListaCategoria({ data, navigation, theme }) {
     }
 
     async function excluirCategoria(data) {
-        let url = `${BACKEND}/categoria/${data._id}`
+        let url = `${BACKEND}/categorias/${data._id}`
         await fetch(url, {
             method: 'DELETE',
             headers: {

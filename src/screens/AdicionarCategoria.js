@@ -29,7 +29,7 @@ function AdicionarCategoria({ navigation, route, theme }) {
             //Verificando se o  registro possui _id. Caso nao houver, inserir via POST, caso contrário via PUT
             const metodo = data._id === null ? 'POST' : 'PUT'
             let statusCategoria = (status === true || status === 'ativo') ? 'ativo' : 'inativo'
-            let categoria = { nome: nome, status: statusCategoria, _id: data._id }
+            let categoria = { nome: nome, status: statusCategoria, foto:foto, _id: data._id }
             setSalvandoCategoria(true)
             let url = `${BACKEND}/categorias`
             await fetch(url, {
