@@ -68,7 +68,7 @@ function AdicionarCategoria({ navigation, route, theme }) {
 
     const obterImagem = async () => {
         const apiUrl = `${BACKEND}/upload`;
-        const response = await DocumentPicker.getDocumentAsync({ type: "image/*" })
+        const response = await DocumentPicker.getDocumentAsync({ type: "image/png" })
         if (response.type === 'success') {
             setUpload(true)
             response.type = 'image/png'
@@ -114,11 +114,12 @@ function AdicionarCategoria({ navigation, route, theme }) {
                     value={nome}
                     mode='outlined'
                     onChangeText={setNome}
+                    error={ !!erros.nome }
 
                 />
-                <Helpertext type="error" visible={!!erros.nome}>
+                <HelperText type="error" visible={!!erros.nome}>
                     {erros.nome}
-                </Helpertext>
+                </HelperText>
                 <View style={styles.checkbox}>
                     <Checkbox
                         status={status ? 'checked' : 'unchecked'}

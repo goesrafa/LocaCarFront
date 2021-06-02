@@ -5,7 +5,7 @@ export const COLORS ={
     ligthGray: "#F5F5FF",
     ligthGray2: "#F6F6F2",
     ligthGray3: "#898C95",
-    branding: "#FC6D3F"
+    branding: "#F6F6F2"
 }
 
 export const SIZES = {

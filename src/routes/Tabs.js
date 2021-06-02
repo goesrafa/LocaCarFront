@@ -10,14 +10,18 @@ import Sobre from '../screens/Sobre'
 export default function Tabs(){
     return(
         <Tab.Navigator>
-            <Tab.Screen name="Usuário" component={Home} options={{tabBarIcon: () =>
-                <FontAwesome name="user" size={24} color="white"/>
+            <Tab.Screen name="Início" component={Home} options={{tabBarIcon: () =>
+                <FontAwesome name="home" size={24} color="white"/>
             
             }}/>
+                           
+           
             <Tab.Screen name="Sobre" component={Sobre} options={{tabBarIcon: () =>
                 <FontAwesome name="cogs" size={24} color="white"/>
             
-            }}/>            
+            }}/>
+
+                      
         </Tab.Navigator>
     )
 }
