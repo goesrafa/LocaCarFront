@@ -6,7 +6,11 @@ function Sobre({route, theme}){
     const { colors } = theme
     return(
         <View style={{backgroundColor: colors.surface}}>
-            <Text style={{color: colors.text}}>Sobre este app...</Text>
+            <Text style={{color: colors.text}}>
+                Aplicativo mobile de Locação de Carro
+                Em ReactJS Juntamente com o banco de dados integrado ao 
+                Heroku e GitHib!!
+            </Text>
         </View>
     )
 }

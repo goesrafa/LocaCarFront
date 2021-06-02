@@ -14,9 +14,9 @@ function AdicionarCategoria({ navigation, route, theme }) {
     const [status, setStatus] = useState(data.status)
     const fotoVazia = { originalname: '', path: '', size: 0, mimetype: '' }
     const [foto, setFoto] = useState(data.foto)
-    const [salvandoCategoria, setSalvandoCategoria] = useState(false)
     const [erros, setErros] = useState({})
     const [upload, setUpload] = useState(false)
+    const [salvandoCategoria, setSalvandoCategoria] = useState(false)
     const [aviso, setAviso] = useState('')
 
     async function salvaCategoria() {
@@ -80,7 +80,7 @@ function AdicionarCategoria({ navigation, route, theme }) {
             }).then(response => response.json())
                 .then(data => {
                     if (data.upload === true) {
-                        const { originalname, path, size, mimetype } = data.file[0]
+                        const { originalname, path, size, mimetype } = data.files[0]
                         setFoto({
                             originalname: originalname,
                             path: path,
@@ -105,9 +105,9 @@ function AdicionarCategoria({ navigation, route, theme }) {
             <Header titulo="Cadastro de Categorias" back={true} navigation={navigation} />
             <View style={{
                 flex: 1, backgroundColor: colors.surface,
-                paddingHorizontal: 24, paddingVertical: 24
+                paddingHorizontal: 24, paddingVertical: 8
             }}>
-                <Caption>Informações da Categoria</Caption>
+                <Caption style={{color: colors.text, fontSize: 20, marginBottom: 32}}>Informações da Categoria</Caption>
                 <TextInput
                     label="Nome da categoria"
                     name="nome"
