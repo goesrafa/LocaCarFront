@@ -8,27 +8,22 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#008B8B"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    
+    "assetBundlePatterns": ["**/*"],
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/splash.png",
-        "backgroundColor": "#008B8B",
-        "package": "com.trabtopicos.locacar"
-      }
+      "package": "com.goesrafa.locacar"
+    },
+    "ios": {
+      "supportsTablet": false
+    }
+    
     },
     "web": {
       "favicon": "./assets/favicon.png"
     }
   }
-}
+
